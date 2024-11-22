@@ -1,4 +1,24 @@
 ﻿function New-BankyAuthentication {
+    <#
+.SYNOPSIS
+    Authenticate to banky
+.DESCRIPTION
+    This function authenticates to banky generating the banky file
+.PARAMETER username
+    The username to authenticate
+.PARAMETER password
+    The password secure string to be used
+.EXAMPLE
+    New-BankyAuthentication -username Teste -password Teste
+    Authenticate to banky with test user
+.INPUTS
+    [System.string] username
+        The username to authenticate
+    [System.SecureString] password
+        The password secure string to be used
+.NOTES
+    Version: 1.0
+#>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
     param (
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)][string]$username,

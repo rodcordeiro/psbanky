@@ -1,4 +1,15 @@
 ﻿function Get-LastTransactions {
+    <#
+.SYNOPSIS
+    Retrieves the last N transactions
+.EXAMPLE
+    Get-LastTransactions
+.OUTPUTS
+    [System.Object[]]
+        Returns an array of transactions data.
+.NOTES
+    Version: 1.0
+#>
     [CmdletBinding()]
     param ()
     begin {
@@ -9,7 +20,8 @@
 
         $isExpired = [datetime]::Parse($bankyAuth.expirationDate) -lt [DateTime]::Now
 
-        if ($isExpired) {a
+        if ($isExpired) {
+            a
             Throw "Login expirado, autentique novamente"
         }
 

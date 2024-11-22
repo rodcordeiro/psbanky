@@ -1,4 +1,15 @@
 function New-BankyTransaction {
+    <#
+.SYNOPSIS
+    Create a transaction
+.DESCRIPTION
+    This function creates a new transaction entry at banky
+.EXAMPLE
+    New-BankyTransaction
+    Create a new transaction entry at banky
+.NOTES
+    Version: 1.0
+#>
     [CmdletBinding()]
     param ()
     begin {

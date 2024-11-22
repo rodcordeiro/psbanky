@@ -1,3 +1,15 @@
+<#
+.SYNOPSIS
+    A simple but yet powerful financial personal assistant cli
+.DESCRIPTION
+    Banky is a finance personal assistant focused on tracking financial spendments and growing a financial health habit. This PSModule focus on working as a CLI for Banky
+.EXAMPLE
+    Import-Module psbanky
+    Use examples of commands provided by the module.
+.NOTES
+    Created by [RodCordeiro](https://github.com/rodcordeiro)
+#>
+
 # Import private and public functions
 $publicFunctions = Get-ChildItem -Path "$PSScriptRoot\functions\public" -Filter *.ps1
 $privateFunctions = Get-ChildItem -Path "$PSScriptRoot\functions\private" -Filter *.ps1
