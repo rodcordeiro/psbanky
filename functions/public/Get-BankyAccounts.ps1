@@ -1,4 +1,4 @@
-function Get-Categories {
+function Get-BankyAccounts {
     [CmdletBinding()]
     param ()
     begin {
@@ -16,11 +16,10 @@ function Get-Categories {
         $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
         $headers.Add("Content-Type", "application/json")
         $headers.Add("Authorization", "Bearer $($bankyAuth.accessToken)")
-     
-        
     }
     process {
-        [BankyCategory[]]$response = Invoke-RestMethod 'http://82.180.136.148:3338/api/v1/categories' -Method 'GET' -Headers $headers
+        
+        [BankyAccount[]]$response = Invoke-RestMethod 'http://82.180.136.148:3338/api/v1/accounts' -Method 'GET' -Headers $headers
         return $response
     }
 }

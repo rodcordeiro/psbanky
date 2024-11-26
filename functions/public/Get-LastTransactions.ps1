@@ -28,12 +28,11 @@
         $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
         $headers.Add("Content-Type", "application/json")
         $headers.Add("Authorization", "Bearer $($bankyAuth.accessToken)")
-        # class BankyTransactionsResponse {
-        #     [BankyTransaction[]]$items
-        # }
+        
+        
     }
     process {
-        # [BankyTransaction[]]
+
         
         $response = Invoke-RestMethod 'http://82.180.136.148:3338/api/v1/transactions' -Method 'GET' -Headers $headers
         [BankyTransaction[]]$items = $response.items

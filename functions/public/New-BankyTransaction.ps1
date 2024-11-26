@@ -11,7 +11,12 @@ function New-BankyTransaction {
     Version: 1.0
 #>
     [CmdletBinding()]
-    param ()
+    param (
+        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]    
+        [string]$account,
+        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]    
+        [string]$category
+    )
     begin {
         Add-Type -AssemblyName System.Windows.Forms
         Add-Type -AssemblyName System.Drawing
@@ -31,13 +36,6 @@ function New-BankyTransaction {
         $headers.Add("Content-Type", "application/json")
         $headers.Add("Authorization", "Bearer $($bankyAuth.accessToken)")
      
-        
-    }
-    process {
-        
-        $accounts = $(Get-Accounts)
-        $categories = $(Get-Categories)
-        
         $accountForm = New-Object System.Windows.Forms.Form
         $accountForm.Text = 'Select an account'
         $accountForm.Size = New-Object System.Drawing.Size(300, 200)
@@ -81,13 +79,6 @@ function New-BankyTransaction {
         $accountForm.Controls.Add($listBox)
         $accountForm.Topmost = $true
 
-        $result = $accountForm.ShowDialog()
-
-        if ($result -eq [System.Windows.Forms.DialogResult]::OK) {
-            $account = $listBox.SelectedItem
-            $account = $accounts | Where-Object { $_.name -eq $account }
-        }
-
         $categoriesForm = New-Object System.Windows.Forms.Form
         $categoriesForm.Text = 'Select an category'
         $categoriesForm.Size = New-Object System.Drawing.Size(300, 200)
@@ -106,10 +97,6 @@ function New-BankyTransaction {
         $cancelButton.Text = 'Cancel'
         $cancelButton.DialogResult = [System.Windows.Forms.DialogResult]::Cancel
         
-        
-       
-        
-        
         $label = New-Object System.Windows.Forms.Label
         $label.Location = New-Object System.Drawing.Point(10, 20)
         $label.Size = New-Object System.Drawing.Size(280, 20)
@@ -121,39 +108,75 @@ function New-BankyTransaction {
         $listBox.Size = New-Object System.Drawing.Size(260, 20)
         $listBox.Height = 80
 
-        foreach ($category in $categories) {
-            [void] $listBox.Items.Add("$(if($category.positive){"(+)"}else{"(-)"}) $($category.name)")
-            if ($category.subcategories) {
-                foreach ($subcategory in $category.subcategories) {
-                    [void] $listBox.Items.Add("$(if($subcategory.positive){"(+)"}else{"(-)"}) $($subcategory.name)")
-                }
-            }
-        }
-
+        
         $categoriesForm.Controls.Add($listBox)
         $categoriesForm.AcceptButton = $okButton
         $categoriesForm.Controls.Add($okButton)
         $categoriesForm.CancelButton = $cancelButton
         $categoriesForm.Controls.Add($cancelButton)
-        $categoriesForm.Topmost = $true
+        $categoriesForm.Topmost = $true        
+    }
+    process {
+        
+        $accounts = $(Get-BankyAccounts)
+        $categories = $(Get-BankyCategories)
+        
+        if (!$account) {
+            $result = $accountForm.ShowDialog()
 
-        $result = $categoriesForm.ShowDialog()
-        if ($result -eq [System.Windows.Forms.DialogResult]::OK) {
-            $category = $listBox.SelectedItem
-            $category = $category.Split(' ')
+            if ($result -eq [System.Windows.Forms.DialogResult]::OK) {
+                $account = $listBox.SelectedItem
+                
+            } return (
+                throw "Cancelled"
+            )
+        }
+        $selectedAccount = $($accounts | Where-Object { $_.name -eq $account })
+
+        
+        if (!$category) {
+            foreach ($category in $categories) {
+                [void] $listBox.Items.Add("$(if($category.positive){"(+)"}else{"(-)"}) $($category.name)")
+                if ($category.subcategories) {
+                    foreach ($subcategory in $category.subcategories) {
+                        [void] $listBox.Items.Add("$(if($subcategory.positive){"(+)"}else{"(-)"}) $($subcategory.name)")
+                    }
+                }
+            }
+    
+            $result = $categoriesForm.ShowDialog()
+            if ($result -eq [System.Windows.Forms.DialogResult]::OK) {
+                $category = $listBox.SelectedItem
+                $category = $category.Split(' ')
+                foreach ($cat in $categories) {
+                    if ($cat.name -eq $category[1]) { $selectedCategory = $cat; continue }
+                    if ($cat.subcategories) {
+                        foreach ($subcategory in $cat.subcategories) {
+                            if ($subcategory.name -eq $category[1]) { $selectedCategory = $subcategory ; continue }
+                        }
+                    }
+                }
+            }
+            else {
+                throw "Cancelled"
+            }
+
+        }
+        else {
+            
             foreach ($cat in $categories) {
-                if ($cat.name -eq $category[1]) { $category = $cat }
+                if ($cat.name -eq $category) { $selectedCategory = $cat; continue }
                 if ($cat.subcategories) {
                     foreach ($subcategory in $cat.subcategories) {
-                        if ($subcategory.name -eq $category[1]) { $category = $subcategory }
+                        if ($subcategory.name -eq $category) { $selectedCategory = $subcategory; continue }
                     }
                 }
             }
         }
-        $category
+        
         $transaction = [CreateBankyTransaction]::new()
-        $transaction.category = $category.id
-        $transaction.account = $account.id
+        $transaction.category = $selectedCategory.id
+        $transaction.account = $selectedAccount.id
         $transaction.description = Read-Host "Informe a descricao da transacao"
         $transaction.value = Read-Host "Informe o valor da transacao" 
         $transaction.date = $(get-date -Format 'yyyy-MM-ddTHH:mm:ss')
@@ -161,7 +184,8 @@ function New-BankyTransaction {
         if ($transaction.value -eq 0) {
             throw "O valor da transacao nao pode ser zero"
         }
-        $transaction
+
+        
         $body = $($transaction | ConvertTo-Json)
         $body
         $response = Invoke-RestMethod 'http://82.180.136.148:3338/api/v1/transactions' -Method 'POST' -Headers $headers -Body $body

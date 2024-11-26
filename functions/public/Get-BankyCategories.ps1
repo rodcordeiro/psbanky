@@ -1,4 +1,4 @@
-function Get-Accounts {
+function Get-BankyCategories {
     [CmdletBinding()]
     param ()
     begin {
@@ -10,7 +10,6 @@ function Get-Accounts {
         $isExpired = [datetime]::Parse($bankyAuth.expirationDate) -lt [DateTime]::Now
 
         if ($isExpired) {
-            a
             Throw "Login expirado, autentique novamente"
         }
 
@@ -21,8 +20,7 @@ function Get-Accounts {
         
     }
     process {
-        
-        [BankyAccount[]]$response = Invoke-RestMethod 'http://82.180.136.148:3338/api/v1/accounts' -Method 'GET' -Headers $headers
+        [BankyCategory[]]$response = Invoke-RestMethod 'http://82.180.136.148:3338/api/v1/categories' -Method 'GET' -Headers $headers
         return $response
     }
 }
