@@ -15,7 +15,11 @@ function New-BankyTransaction {
         [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]    
         [string]$account,
         [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]    
-        [string]$category
+        [string]$category,
+        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]    
+        [string]$description,
+        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]    
+        [decimal]$value
     )
     begin {
         Add-Type -AssemblyName System.Windows.Forms
@@ -131,8 +135,9 @@ function New-BankyTransaction {
                 throw "Cancelled"
             )
         }
-        $selectedAccount = $($accounts | Where-Object { $_.name -eq $account })
-
+        $selectedAccount = $($accounts | Where-Object { $_.name -like "*$account*" })
+        if (!$selectedAccount) { throw "Account not found" }
+        if (($selectedAccount | Measure-Object).Count -gt 1) { throw "Account filter returned more than one value. Please be more specific." }
         
         if (!$category) {
             foreach ($category in $categories) {
@@ -165,20 +170,23 @@ function New-BankyTransaction {
         else {
             
             foreach ($cat in $categories) {
-                if ($cat.name -eq $category) { $selectedCategory = $cat; continue }
+                if ($cat.name -like "*$category*") { $selectedCategory = $cat; continue }
                 if ($cat.subcategories) {
                     foreach ($subcategory in $cat.subcategories) {
-                        if ($subcategory.name -eq $category) { $selectedCategory = $subcategory; continue }
+                        if ($subcategory.name -like "*$category*") { $selectedCategory = $subcategory; continue }
                     }
                 }
             }
         }
         
+        if (!$selectedCategory) { throw "Category not found" }
+        if (($selectedCategory | Measure-Object).Count -gt 1) { throw "Category filter returned more than one value. Please be more specific." }
+        
         $transaction = [CreateBankyTransaction]::new()
         $transaction.category = $selectedCategory.id
         $transaction.account = $selectedAccount.id
-        $transaction.description = Read-Host "Informe a descricao da transacao"
-        $transaction.value = Read-Host "Informe o valor da transacao" 
+        $transaction.description = if ($description) { $description } else { Read-Host "Informe a descricao da transacao" }
+        $transaction.value = if ($value) { $value } else { Read-Host "Informe o valor da transacao" }
         $transaction.date = $(get-date -Format 'yyyy-MM-ddTHH:mm:ss')
 
         if ($transaction.value -eq 0) {
@@ -192,3 +200,4 @@ function New-BankyTransaction {
         $response
     }
 }
+

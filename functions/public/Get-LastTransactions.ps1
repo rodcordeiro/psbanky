@@ -21,7 +21,6 @@
         $isExpired = [datetime]::Parse($bankyAuth.expirationDate) -lt [DateTime]::Now
 
         if ($isExpired) {
-            a
             Throw "Login expirado, autentique novamente"
         }
 
