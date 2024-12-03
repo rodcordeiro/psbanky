@@ -53,6 +53,5 @@ foreach ($file in $privateClasses) {
     }
 }
 
-(Get-ChildItem -Path "$PSScriptRoot\functions\public" -Filter *.ps1 | ForEach-Object { $_.BaseName })
 # Export only public functions
 Export-ModuleMember -Function (Get-ChildItem -Path "$PSScriptRoot\functions\public" -Filter *.ps1 | ForEach-Object { $_.BaseName })
