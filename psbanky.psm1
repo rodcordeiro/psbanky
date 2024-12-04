@@ -22,7 +22,7 @@ foreach ($file in $publicFunctions) {
         . $file.FullName
     }
     catch {
-        Write-Host "Error loading $($file.Name): $($file.Exception)"
+        Write-Error "Error loading $($file.Name): $($file.Exception)"
     }
 }
 
@@ -32,7 +32,7 @@ foreach ($file in $privateFunctions) {
         . $file.FullName
     }
     catch {
-        Write-Host "Error loading $($file.Name): $($file.Exception)"
+        Write-Error "Error loading $($file.Name): $($file.Exception)"
     }
 }
 # Dot-source all Private Functions
@@ -41,7 +41,7 @@ foreach ($file in $publicClasses) {
         . $file.FullName
     }
     catch {
-        Write-Host "Error loading $($file.Name): $($file.Exception.Message)"
+        Write-Error "Error loading $($file.Name): $($file.Exception.Message)"
     }
 }# Dot-source all Private Functions
 foreach ($file in $privateClasses) {
@@ -49,7 +49,7 @@ foreach ($file in $privateClasses) {
         . $file.FullName
     }
     catch {
-        Write-Host "Error loading $($file.Name): $($file.Exception)"
+        Write-Error "Error loading $($file.Name): $($file.Exception)"
     }
 }
 

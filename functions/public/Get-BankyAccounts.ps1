@@ -1,4 +1,4 @@
-function Get-BankyAccounts {
+﻿function Get-BankyAccount {
     [CmdletBinding()]
     param ()
     begin {
@@ -23,7 +23,7 @@ function Get-BankyAccounts {
         $headers.Add("Authorization", "Bearer $($bankyAuth.accessToken)")
     }
     process {
-        
+
         [BankyAccount[]]$response = Invoke-RestMethod 'http://82.180.136.148:3338/api/v1/accounts' -Method 'GET' -Headers $headers
         return $response
     }

@@ -1,4 +1,4 @@
-﻿function Get-LastTransactions {
+﻿function Get-LastTransaction {
     <#
 .SYNOPSIS
     Retrieves the last N transactions
@@ -32,12 +32,12 @@
         $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
         $headers.Add("Content-Type", "application/json")
         $headers.Add("Authorization", "Bearer $($bankyAuth.accessToken)")
-        
-        
+
+
     }
     process {
 
-        
+
         $response = Invoke-RestMethod 'http://82.180.136.148:3338/api/v1/transactions' -Method 'GET' -Headers $headers
         [BankyTransaction[]]$items = $response.items
         foreach ($transaction in $items) {
