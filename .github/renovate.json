@@ -1,5 +1,8 @@
 {
   "branchPrefix": "updates/",
+  "baseBranch": [
+    "develop"
+  ],
   "packageRules": [
     {
       "matchUpdateTypes": [
