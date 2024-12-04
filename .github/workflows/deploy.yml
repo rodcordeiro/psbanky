@@ -27,7 +27,7 @@ jobs:
         with:
           # The name of the PowerShell module
           ModuleName: PSBanky
-          Source: . # optional, default is 
+          # Source: . # optional, default is 
           # The source directory containing the module (relative to the workspace)
           # The output directory for storing the module (relative to the workspace)
           # PowerShell Gallery API Key
