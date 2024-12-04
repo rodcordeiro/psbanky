@@ -7,19 +7,29 @@ function New-BankyTransaction {
 .EXAMPLE
     New-BankyTransaction
     Create a new transaction entry at banky
+
 .NOTES
     Version: 1.0
 #>
     [CmdletBinding()]
     param (
+        # Account to be used, if not specified the user will be prompted to select it in a listbox.
         [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]    
         [string]$account,
+        # Category to be used, if not specified the user will be prompted to select it in a listbox.
         [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]    
         [string]$category,
+        # Transaction description
         [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]    
         [string]$description,
+        # Transaction value
         [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]    
-        [decimal]$value
+        [decimal]$value,
+        # Transaction date at ISO format
+        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]    
+        [datetime]$date,
+        # If account parameter is specified, the script will search for the account with a similar name, breaking if it returns more than one account. This switch disables the like filter.        
+        [switch]$AccountMatchExact
     )
     begin {
         Add-Type -AssemblyName System.Windows.Forms
@@ -33,7 +43,12 @@ function New-BankyTransaction {
         $isExpired = [datetime]::Parse($bankyAuth.expirationDate) -lt [DateTime]::Now
 
         if ($isExpired) {
-            Throw "Login expirado, autentique novamente"
+            try {
+                New-BankyAuthentication @banky
+            }
+            catch {
+                Throw "Login expirado, autentique novamente"
+            }
         }
 
         $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
@@ -117,7 +132,7 @@ function New-BankyTransaction {
             }
         }
         else {
-            $selectedAccount = $($accounts | Where-Object { $_.name -like "*$account*" })
+            $selectedAccount = if ($AccountMatchExact) { $accounts | Where-Object { $_.name -eq $account } } else { $accounts | Where-Object { $_.name -like "*$account*" } }
         }
         
         if (!$selectedAccount) { throw "Account not found" }
@@ -210,15 +225,14 @@ function New-BankyTransaction {
         $transaction.account = $selectedAccount.id
         $transaction.description = if ($description) { $description } else { Read-Host "Informe a descricao da transacao" }
         $transaction.value = if ($value) { $value } else { Read-Host "Informe o valor da transacao" }
-        $transaction.date = $(get-date -Format 'yyyy-MM-ddTHH:mm:ss')
+        $transaction.date = if ($date) { get-date -Format 'yyyy-MM-ddTHH:mm:ss' -Date $date } else { $(get-date -Format 'yyyy-MM-ddTHH:mm:ss') }
 
         if ($transaction.value -eq 0) {
             throw "O valor da transacao nao pode ser zero"
         }
 
-        
         $body = $($transaction | ConvertTo-Json)
-        
+
         $response = Invoke-RestMethod 'http://82.180.136.148:3338/api/v1/transactions' -Method 'POST' -Headers $headers -Body $body
         $response
     }
