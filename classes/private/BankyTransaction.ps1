@@ -1,3 +1,31 @@
+
+class BankyCategory {
+    [string]$id
+    [datetime]$createdAt
+    [datetime]$updatedAt
+    [string]$name
+    [bool]$positive
+    [bool]$internal
+    [BankyCategory[]]$subcategories
+}
+class BankyPaymentType {
+    [string]$id
+    [datetime]$createdAt
+    [datetime]$updatedAt
+    [string]$name
+}
+
+class BankyAccount {
+    [string]$id
+    [datetime]$createdAt
+    [datetime]$updatedAt
+    [string]$name
+    [float]$ammount
+    [float]$threshold
+    [BankyPaymentType]$paymentType
+}
+
+
 class BankyTransaction {
     [string]$id
     [datetime]$createdAt
