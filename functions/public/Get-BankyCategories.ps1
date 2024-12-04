@@ -10,7 +10,12 @@ function Get-BankyCategories {
         $isExpired = [datetime]::Parse($bankyAuth.expirationDate) -lt [DateTime]::Now
 
         if ($isExpired) {
-            Throw "Login expirado, autentique novamente"
+            try {
+                New-BankyAuthentication @banky
+            }
+            catch {
+                Throw "Login expirado, autentique novamente"
+            }
         }
 
         $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
