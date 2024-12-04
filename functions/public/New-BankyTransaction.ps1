@@ -70,12 +70,11 @@ function New-BankyTransaction {
         $label = New-Object System.Windows.Forms.Label
         $label.Location = New-Object System.Drawing.Point(10, 20)
         $label.Size = New-Object System.Drawing.Size(280, 20)
-
-    }
-    process {
-        
+       
         $accounts = $(Get-BankyAccounts)
         $categories = $(Get-BankyCategories)
+    }
+    process {
         
         if (!$account) {
 
