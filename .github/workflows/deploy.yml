@@ -19,30 +19,31 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-      - name: Build-PSModule (by PSModule)
-        # You may pin to the exact commit or the version.
-        # uses: PSModule/Build-PSModule@e78a220d18e26806b2d457f73af5e0687bf01253
-        uses: PSModule/Build-PSModule@v1.0.0
+      - name: Run PSScriptAnalyzer
+        uses: microsoft/psscriptanalyzer-action@7a0da25f33985767f15f93140306528900744195
         with:
-          # Name of the module to process.
-          Name: psbanky # optional
-          # Path to the folder where the modules are located.
-          # Path: # optional, default is src
-          # Path to the folder where the built modules are outputted.
-          # ModulesOutputPath: # optional, default is outputs/modules
-          # Path to the folder where the built docs are outputted.
-          # DocsOutputPath: # optional, default is outputs/docs
-          
-      - name: Publish PowerShell Module to PowerShellGallery
-        # You may pin to the exact commit or the version.
-        # uses: mod-posh/PublishPowerShellModule@4c876309d52cad8b4c3faa1bfc449d5fffe36a9b
-        uses: PSModule/Publish-PSModule@v1.0.6
-        with:
-          # The name of the PowerShell module
-          Name: psbanky
-          # The source directory containing the module (relative to the workspace)
-          # Source: . # optional, default is 
-          # The output directory for storing the module (relative to the workspace)
-          # PowerShell Gallery API Key
-          APIKey: ${{ secrets.PSG_TOKEN }}
-                
+          path: .\
+          recurse: true
+      - name: Install and import PlatyPS
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module PlatyPS -ErrorAction Stop
+      - name: Lint with PSScriptAnalyzer
+        shell: pwsh
+        run: |
+          Invoke-ScriptAnalyzer -Path *.ps1 -Recurse -Outvariable issues
+          $errors   = $issues.Where({$_.Severity -eq 'Error'})
+          $warnings = $issues.Where({$_.Severity -eq 'Warning'})
+          if ($errors) {
+              Write-Error "There were $($errors.Count) errors and $($warnings.Count) warnings total." -ErrorAction Stop
+          } else {
+              Write-Output "There were $($errors.Count) errors and $($warnings.Count) warnings total."
+          }
+      - name: Build and publish
+        env:
+          NUGET_KEY: ${{ secrets.PSG_TOKEN }}
+        shell: pwsh
+        run: |
+          Publish-Module -Path psbanky.psd1 -NuGetApiKey $env:NUGET_KEY -Verbose
+      
