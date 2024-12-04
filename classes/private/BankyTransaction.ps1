@@ -1,4 +1,4 @@
-
+﻿
 class BankyCategory {
     [string]$id
     [datetime]$createdAt
@@ -40,19 +40,19 @@ class BankyTransaction {
 class CreateBankyTransaction {
     [AllowNull()][string]$id
     [string]$description
-    [string]$date 
+    [string]$date
     [decimal]$value
     [string]$account
     [string]$category
 }
 class UpdateBankyTransaction {
     [string]$id
-    [AllowNull()][string]$description = $null 
-    [AllowNull()][string]$date = $null 
-    [AllowNull()][decimal]$value = $null 
-    [AllowNull()][string]$account = $null 
-    [AllowNull()][string]$category = $null 
-    
+    [AllowNull()][string]$description = $null
+    [AllowNull()][string]$date = $null
+    [AllowNull()][decimal]$value = $null
+    [AllowNull()][string]$account = $null
+    [AllowNull()][string]$category = $null
+
     UpdateBankyTransaction([string]$id) {
         $this.id = $id;
     }

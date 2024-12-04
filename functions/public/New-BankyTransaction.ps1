@@ -1,4 +1,4 @@
-function New-BankyTransaction {
+﻿function New-BankyTransaction {
     <#
 .SYNOPSIS
     Create a transaction
@@ -14,26 +14,26 @@ function New-BankyTransaction {
     [CmdletBinding()]
     param (
         # Account to be used, if not specified the user will be prompted to select it in a listbox.
-        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]    
+        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]
         [string]$account,
         # Category to be used, if not specified the user will be prompted to select it in a listbox.
-        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]    
+        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]
         [string]$category,
         # Transaction description
-        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]    
+        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]
         [string]$description,
         # Transaction value
-        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]    
+        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]
         [decimal]$value,
         # Transaction date at ISO format
-        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]    
+        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]
         [datetime]$date,
-        # If account parameter is specified, the script will search for the account with a similar name, breaking if it returns more than one account. This switch disables the like filter.        
+        # If account parameter is specified, the script will search for the account with a similar name, breaking if it returns more than one account. This switch disables the like filter.
         [switch]$AccountMatchExact
     )
-    
+
     begin {
-       
+
         if (!(Test-Path "$($(Resolve-Path -Path $env:USERPROFILE).Path)\.banky" -ErrorAction Stop)) {
             throw "Banky not found. Please configure it."
         }
@@ -53,12 +53,12 @@ function New-BankyTransaction {
         $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
         $headers.Add("Content-Type", "application/json")
         $headers.Add("Authorization", "Bearer $($bankyAuth.accessToken)")
-     
+
         $accounts = $(Get-BankyAccounts)
         $categories = $(Get-BankyCategories)
     }
     process {
-        
+
         if (!$account) {
 
             $accountForm = (Invoke-ListBox -title 'Select Account' -content 'Selecione uma conta para prosseguir' -map {
@@ -71,19 +71,19 @@ function New-BankyTransaction {
             if ($accountForm) {
                 $selectedAccount = $($accounts | Where-Object { $_.name -eq $accountForm })
             }
-            else { 
-                throw "Account cancelled" 
+            else {
+                throw "Account cancelled"
             }
         }
         else {
             $selectedAccount = if ($AccountMatchExact) { $accounts | Where-Object { $_.name -eq $account } } else { $accounts | Where-Object { $_.name -like "*$account*" } }
         }
-        
+
         if (!$selectedAccount) { throw "Account not found" }
         if (($selectedAccount | Measure-Object).Count -gt 1) { throw "Account filter returned more than one value. Please be more specific." }
-        
+
         if (!$category) {
-            
+
             $categoryForm = (Invoke-ListBox -title 'Select Category' -content 'Selecione uma categoria para prosseguir' -map {
                     param($listBox)
                     foreach ($item in $categories) {
@@ -95,7 +95,7 @@ function New-BankyTransaction {
                         }
                     }
                 })
-        
+
             if ($categoryForm) {
                 $category = $categoryForm.ToString().Split(" ")[1]
                 foreach ($cat in $categories) {
@@ -107,13 +107,13 @@ function New-BankyTransaction {
                     }
                 }
             }
-            else { 
-                throw "Category cancelled" 
+            else {
+                throw "Category cancelled"
             }
 
         }
         else {
-            
+
             foreach ($cat in $categories) {
                 if ($cat.name -like "*$category*") { $selectedCategory = $cat }
                 if ($cat.subcategories) {
@@ -123,10 +123,10 @@ function New-BankyTransaction {
                 }
             }
         }
-        
+
         if (!$selectedCategory) { throw "Category not found" }
         if (($selectedCategory | Measure-Object).Count -gt 1) { throw "Category filter returned more than one value. Please be more specific." }
-        
+
         $transaction = [CreateBankyTransaction]::new()
         $transaction.category = $selectedCategory.id
         $transaction.account = $selectedAccount.id
