@@ -19,17 +19,30 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-
+      - name: Build-PSModule (by PSModule)
+        # You may pin to the exact commit or the version.
+        # uses: PSModule/Build-PSModule@e78a220d18e26806b2d457f73af5e0687bf01253
+        uses: PSModule/Build-PSModule@v1.0.0
+        with:
+          # Name of the module to process.
+          Name: psbanky # optional
+          # Path to the folder where the modules are located.
+          # Path: # optional, default is src
+          # Path to the folder where the built modules are outputted.
+          # ModulesOutputPath: # optional, default is outputs/modules
+          # Path to the folder where the built docs are outputted.
+          # DocsOutputPath: # optional, default is outputs/docs
+          
       - name: Publish PowerShell Module to PowerShellGallery
         # You may pin to the exact commit or the version.
         # uses: mod-posh/PublishPowerShellModule@4c876309d52cad8b4c3faa1bfc449d5fffe36a9b
-        uses: mod-posh/PublishPowerShellModule@v0.0.1.0
+        uses: PSModule/Publish-PSModule@v1.0.6
         with:
           # The name of the PowerShell module
-          ModuleName: PSBanky
-          # Source: . # optional, default is 
+          Name: psbanky
           # The source directory containing the module (relative to the workspace)
+          # Source: . # optional, default is 
           # The output directory for storing the module (relative to the workspace)
           # PowerShell Gallery API Key
-          ApiKey: ${{ secrets.PSG_TOKEN }}
+          APIKey: ${{ secrets.PSG_TOKEN }}
                 
