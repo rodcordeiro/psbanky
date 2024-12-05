@@ -5,15 +5,15 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-BankyAccounts
+# Get-LastTransaction
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Retrieves the last N transactions
 
 ## SYNTAX
 
 ```
-Get-BankyAccounts [<CommonParameters>]
+Get-LastTransaction [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -21,12 +21,10 @@ Get-BankyAccounts [<CommonParameters>]
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXEMPLO 1
 ```
-
-{{ Add example description here }}
+Get-LastTransactions
+```
 
 ## PARAMETERS
 
@@ -35,11 +33,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### Nenhum
-
 ## OUTPUTS
 
-### System.Object
+### [System.Object[]]
+###     Returns an array of transactions data.
 ## NOTES
+Version: 1.0
 
 ## RELATED LINKS

@@ -8,140 +8,33 @@ schema: 2.0.0
 # Update-BankyTransaction
 
 ## SYNOPSIS
-Update a transaction
+Authenticate to banky
 
 ## SYNTAX
 
-```
-Update-BankyTransaction [-id] <String> [[-account] <String>] [[-category] <String>] [[-description] <String>]
- [[-value] <Decimal>] [[-date] <DateTime>] [-AccountMatchExact] [<CommonParameters>]
-```
-
 ## DESCRIPTION
-This function update transaction entry at banky
+This function authenticates to banky generating the banky file
 
 ## EXAMPLES
 
 ### EXEMPLO 1
 ```
-Update-BankyTransaction
+New-BankyAuthentication -username Teste -password Teste
 ```
 
-Update a transaction entry at banky
+Authenticate to banky with test user
 
 ## PARAMETERS
-
-### -id
-Transaction to be updated
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -account
-Account to be used, if not specified the user will be prompted to select it in a listbox.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -category
-Category to be used, if not specified the user will be prompted to select it in a listbox.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -description
-Transaction description
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -value
-Transaction value
-
-```yaml
-Type: Decimal
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: 0
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -date
-Transaction date at ISO format
-
-```yaml
-Type: DateTime
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 6
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -AccountMatchExact
-If account parameter is specified, the script will search for the account with a similar name, breaking if it returns more than one account.
-This switch disables the like filter.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
+### [System.string] username
+###     The username to authenticate
+### [System.SecureString] password
+###     The password secure string to be used
 ## OUTPUTS
 
 ## NOTES
