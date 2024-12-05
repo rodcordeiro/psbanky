@@ -38,7 +38,6 @@ class BankyTransaction {
 }
 
 class CreateBankyTransaction {
-    [AllowNull()][string]$id
     [string]$description
     [string]$date
     [decimal]$value

@@ -2,9 +2,9 @@
 <helpItems schema="maml" xmlns="http://msh">
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
-      <command:name>Get-BankyAccounts</command:name>
+      <command:name>Get-BankyAccount</command:name>
       <command:verb>Get</command:verb>
-      <command:noun>BankyAccounts</command:noun>
+      <command:noun>BankyAccount</command:noun>
       <maml:description>
         <maml:para>{{ Fill in the Synopsis }}</maml:para>
       </maml:description>
@@ -14,7 +14,7 @@
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name>Get-BankyAccounts</maml:name>
+        <maml:name>Get-BankyAccount</maml:name>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters />
@@ -56,9 +56,9 @@
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
-      <command:name>Get-BankyCategories</command:name>
+      <command:name>Get-BankyCategory</command:name>
       <command:verb>Get</command:verb>
-      <command:noun>BankyCategories</command:noun>
+      <command:noun>BankyCategory</command:noun>
       <maml:description>
         <maml:para>{{ Fill in the Synopsis }}</maml:para>
       </maml:description>
@@ -68,7 +68,7 @@
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name>Get-BankyCategories</maml:name>
+        <maml:name>Get-BankyCategory</maml:name>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters />
@@ -110,9 +110,9 @@
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
-      <command:name>Get-LastTransactions</command:name>
+      <command:name>Get-LastTransaction</command:name>
       <command:verb>Get</command:verb>
-      <command:noun>LastTransactions</command:noun>
+      <command:noun>LastTransaction</command:noun>
       <maml:description>
         <maml:para>Retrieves the last N transactions</maml:para>
       </maml:description>
@@ -122,7 +122,7 @@
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name>Get-LastTransactions</maml:name>
+        <maml:name>Get-LastTransaction</maml:name>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters />
@@ -331,163 +331,52 @@
       <command:verb>New</command:verb>
       <command:noun>BankyTransaction</command:noun>
       <maml:description>
-        <maml:para>Create a transaction</maml:para>
+        <maml:para>Authenticate to banky</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>This function creates a new transaction entry at banky</maml:para>
+      <maml:para>This function authenticates to banky generating the banky file</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
         <maml:name>New-BankyTransaction</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
-          <maml:name>account</maml:name>
-          <maml:description>
-            <maml:para>Account to be used, if not specified the user will be prompted to select it in a listbox.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
-          <maml:name>category</maml:name>
-          <maml:description>
-            <maml:para>Category to be used, if not specified the user will be prompted to select it in a listbox.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
-          <maml:name>description</maml:name>
-          <maml:description>
-            <maml:para>Transaction description</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="4" aliases="none">
-          <maml:name>value</maml:name>
-          <maml:description>
-            <maml:para>Transaction value</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">Decimal</command:parameterValue>
-          <dev:type>
-            <maml:name>Decimal</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>0</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="5" aliases="none">
-          <maml:name>date</maml:name>
-          <maml:description>
-            <maml:para>Transaction date at ISO format</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
-          <dev:type>
-            <maml:name>DateTime</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>AccountMatchExact</maml:name>
-          <maml:description>
-            <maml:para>If account parameter is specified, the script will search for the account with a similar name, breaking if it returns more than one account. This switch disables the like filter.</maml:para>
-          </maml:description>
-          <dev:type>
-            <maml:name>SwitchParameter</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>False</dev:defaultValue>
-        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
-    <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
-        <maml:name>account</maml:name>
-        <maml:description>
-          <maml:para>Account to be used, if not specified the user will be prompted to select it in a listbox.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+    <command:parameters />
+    <command:inputTypes>
+      <command:inputType>
         <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
+          <maml:name>[System.string] username</maml:name>
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
-        <maml:name>category</maml:name>
         <maml:description>
-          <maml:para>Category to be used, if not specified the user will be prompted to select it in a listbox.</maml:para>
+          <maml:para></maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+      </command:inputType>
+      <command:inputType>
         <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
+          <maml:name>The username to authenticate</maml:name>
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
-        <maml:name>description</maml:name>
         <maml:description>
-          <maml:para>Transaction description</maml:para>
+          <maml:para></maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+      </command:inputType>
+      <command:inputType>
         <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
+          <maml:name>[System.SecureString] password</maml:name>
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="4" aliases="none">
-        <maml:name>value</maml:name>
         <maml:description>
-          <maml:para>Transaction value</maml:para>
+          <maml:para></maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">Decimal</command:parameterValue>
+      </command:inputType>
+      <command:inputType>
         <dev:type>
-          <maml:name>Decimal</maml:name>
-          <maml:uri />
+          <maml:name>The password secure string to be used</maml:name>
         </dev:type>
-        <dev:defaultValue>0</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="5" aliases="none">
-        <maml:name>date</maml:name>
         <maml:description>
-          <maml:para>Transaction date at ISO format</maml:para>
+          <maml:para></maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
-        <dev:type>
-          <maml:name>DateTime</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>AccountMatchExact</maml:name>
-        <maml:description>
-          <maml:para>If account parameter is specified, the script will search for the account with a similar name, breaking if it returns more than one account. This switch disables the like filter.</maml:para>
-        </maml:description>
-        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
-        <dev:type>
-          <maml:name>SwitchParameter</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>False</dev:defaultValue>
-      </command:parameter>
-    </command:parameters>
-    <command:inputTypes />
+      </command:inputType>
+    </command:inputTypes>
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
@@ -497,9 +386,78 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXEMPLO 1 --------------------------</maml:title>
-        <dev:code>New-BankyTransaction</dev:code>
+        <dev:code>New-BankyAuthentication -username Teste -password Teste</dev:code>
         <dev:remarks>
-          <maml:para>Create a new transaction entry at banky</maml:para>
+          <maml:para>Authenticate to banky with test user</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Update-BankyTransaction</command:name>
+      <command:verb>Update</command:verb>
+      <command:noun>BankyTransaction</command:noun>
+      <maml:description>
+        <maml:para>Authenticate to banky</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>This function authenticates to banky generating the banky file</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Update-BankyTransaction</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>[System.string] username</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+      <command:inputType>
+        <dev:type>
+          <maml:name>The username to authenticate</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+      <command:inputType>
+        <dev:type>
+          <maml:name>[System.SecureString] password</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+      <command:inputType>
+        <dev:type>
+          <maml:name>The password secure string to be used</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Version: 1.0</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXEMPLO 1 --------------------------</maml:title>
+        <dev:code>New-BankyAuthentication -username Teste -password Teste</dev:code>
+        <dev:remarks>
+          <maml:para>Authenticate to banky with test user</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

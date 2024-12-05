@@ -45,5 +45,5 @@ jobs:
           NUGET_KEY: ${{ secrets.PSG_TOKEN }}
         shell: pwsh
         run: |
-          Publish-Module -Name .\psbanky.psd1 -NuGetApiKey $env:NUGET_KEY -Verbose
+          Publish-Module -Name .\psbanky.psd1 -NuGetApiKey $env:NUGET_KEY
       
