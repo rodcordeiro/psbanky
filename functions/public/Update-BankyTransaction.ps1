@@ -10,7 +10,8 @@
 .NOTES
     Version: 1.0
 #>
-    [CmdletBinding()]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", Justification = "Not applicable")]
+    [CmdletBinding(ConfirmImpact = 'None')]
     param (
         # Transaction to be updated
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName)]

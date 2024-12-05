@@ -11,7 +11,8 @@
 .NOTES
     Version: 1.0
 #>
-    [CmdletBinding()]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", Justification = "Not applicable")]
+    [CmdletBinding(ConfirmImpact = 'None')]
     param (
         # Account to be used, if not specified the user will be prompted to select it in a listbox.
         [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName)]
@@ -34,9 +35,21 @@
 
     begin {
 
+        if (-not $PSBoundParameters.ContainsKey('Verbose')) {
+            $VerbosePreference = $PSCmdlet.SessionState.PSVariable.GetValue('VerbosePreference')
+        }
+        if (-not $PSBoundParameters.ContainsKey('Confirm')) {
+            $ConfirmPreference = $PSCmdlet.SessionState.PSVariable.GetValue('ConfirmPreference')
+        }
+        if (-not $PSBoundParameters.ContainsKey('WhatIf')) {
+            $WhatIfPreference = $PSCmdlet.SessionState.PSVariable.GetValue('WhatIfPreference')
+        }
+
+
         if (!(Test-Path "$($(Resolve-Path -Path $env:USERPROFILE).Path)\.banky" -ErrorAction Stop)) {
             throw "Banky not found. Please configure it."
         }
+
         [BankyAuthenticationResponse]$bankyAuth = $(Get-Content "$($(Resolve-Path -Path $env:USERPROFILE).Path)\.banky" -ErrorAction Stop | ConvertFrom-Json )
 
         $isExpired = [datetime]::Parse($bankyAuth.expirationDate) -lt [DateTime]::Now
@@ -49,6 +62,7 @@
                 Throw "Login expirado, autentique novamente"
             }
         }
+
 
         $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
         $headers.Add("Content-Type", "application/json")
