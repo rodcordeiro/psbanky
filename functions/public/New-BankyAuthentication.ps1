@@ -51,10 +51,11 @@
 
         [BankyAuthenticationResponse]$response = Invoke-RestMethod 'http://82.180.136.148:3338/api/v1/auth/login' -Method 'POST' -Headers $headers -Body $body
         $response.GetExpirationDate()
+        $response.username = $username
+        $response.key = (Unprotect-SecureString $password)
 
         if ($PSCmdlet.ShouldProcess("$($(Resolve-Path -Path $env:USERPROFILE).Path)\.banky", "Cria o arquivo .banky com as informacoes de autenticação")) {
             New-Item -Type 'File' -Name '.banky' -Path $($(Resolve-Path -Path $env:USERPROFILE).Path) -Value $($response | ConvertTo-Json) -Force:$true -Confirm:$false -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference | Out-Null
         }
     }
-    end {}
 }

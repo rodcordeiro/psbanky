@@ -1,17 +1,9 @@
-﻿function Get-LastTransaction {
-    <#
-.SYNOPSIS
-    Retrieves the last N transactions
-.EXAMPLE
-    Get-LastTransactions
-.OUTPUTS
-    [System.Object[]]
-        Returns an array of transactions data.
-.NOTES
-    Version: 1.0
-#>
-    [CmdletBinding()]
-    param ()
+function Invoke-Api {
+    param(
+        [uri]$Uri,
+        [string]$Method,
+        [AllowNull()][Object]$Body
+    )
     begin {
         if (!(Test-Path "$($(Resolve-Path -Path $env:USERPROFILE).Path)\.banky" -ErrorAction Stop)) {
             throw "Banky not found. Please configure it."
@@ -22,7 +14,8 @@
 
         if ($isExpired) {
             try {
-                New-BankyAuthentication @banky
+                $cred = $bankyAuth.GetCredentials()
+                New-BankyAuthentication @cred
             }
             catch {
                 Throw "Login expirado, autentique novamente"
@@ -33,15 +26,9 @@
         $headers.Add("Content-Type", "application/json")
         $headers.Add("Authorization", "Bearer $($bankyAuth.accessToken)")
 
-
     }
     process {
-
-
-        $response = Invoke-RestMethod 'http://82.180.136.148:3338/api/v1/transactions' -Method 'GET' -Headers $headers
-        [BankyTransaction[]]$items = $response.items
-        foreach ($transaction in $items) {
-            $transaction
-        }
+        $response = Invoke-RestMethod $Uri -Method $Method -Headers $headers -Body $Body
+        return $response
     }
 }

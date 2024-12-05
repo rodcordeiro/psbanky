@@ -43,33 +43,11 @@
     )
 
     begin {
-
-        if (!(Test-Path "$($(Resolve-Path -Path $env:USERPROFILE).Path)\.banky" -ErrorAction Stop)) {
-            throw "Banky not found. Please configure it."
-        }
-        [BankyAuthenticationResponse]$bankyAuth = $(Get-Content "$($(Resolve-Path -Path $env:USERPROFILE).Path)\.banky" -ErrorAction Stop | ConvertFrom-Json )
-
-        $isExpired = [datetime]::Parse($bankyAuth.expirationDate) -lt [DateTime]::Now
-
-        if ($isExpired) {
-            try {
-                New-BankyAuthentication @banky
-            }
-            catch {
-                Throw "Login expirado, autentique novamente"
-            }
-        }
-
-        $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-        $headers.Add("Content-Type", "application/json")
-        $headers.Add("Authorization", "Bearer $($bankyAuth.accessToken)")
-
-
-        $accounts = $(Get-BankyAccounts)
-        $categories = $(Get-BankyCategories)
+        $accounts = $(Get-BankyAccount)
+        $categories = $(Get-BankyCategory)
     }
-    process {
 
+    process {
 
         $transaction = [UpdateBankyTransaction]::new($id)
         $transaction.description = if ($description) { $description }
@@ -101,20 +79,9 @@
         }
 
 
-        # Convert to JSON and remove null/empty values
-        $jsonObject = $transaction | ConvertTo-Json -Depth 1 | ConvertFrom-Json
+        $body = $transaction | Remove-Nulls | ConvertTo-Json -Depth 1
 
-        # Filter out null or empty properties
-        $filteredObject = @{}
-        $jsonObject.PSObject.Properties.Where({ $null -ne $_.Value -and $_.Value -ne "" }) | ForEach-Object {
-            $filteredObject[$_.Name] = $_.Value
-        }
-
-        # Convert back to JSON
-        $body = $filteredObject | ConvertTo-Json -Depth 1
-
-
-        $response = Invoke-RestMethod "http://82.180.136.148:3338/api/v1/transactions/$($transaction.id)" -Method 'PUT' -Headers $headers -Body $body
+        $response = Invoke-Api "http://82.180.136.148:3338/api/v1/transactions/$($transaction.id)" -Method 'PUT' -Body $body
         $response
     }
 
