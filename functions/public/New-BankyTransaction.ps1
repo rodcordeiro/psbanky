@@ -11,7 +11,6 @@
 .NOTES
     Version: 1.0
 #>
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", Justification = "Not applicable")]
     [CmdletBinding(ConfirmImpact = 'None')]
     param (
         # Account to be used, if not specified the user will be prompted to select it in a listbox.
