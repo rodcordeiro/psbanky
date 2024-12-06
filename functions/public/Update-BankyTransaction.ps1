@@ -10,7 +10,6 @@
 .NOTES
     Version: 1.0
 #>
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", Justification = "Not applicable")]
     [CmdletBinding(ConfirmImpact = 'None')]
     param (
         # Transaction to be updated
@@ -79,7 +78,7 @@
         }
 
 
-        $body = $transaction | Remove-Nulls | ConvertTo-Json -Depth 1
+        $body = $transaction | Remove-Null | ConvertTo-Json -Depth 1
 
         $response = Invoke-Api "http://82.180.136.148:3338/api/v1/transactions/$($transaction.id)" -Method 'PUT' -Body $body
         $response

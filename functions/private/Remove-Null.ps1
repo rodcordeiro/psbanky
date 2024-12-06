@@ -1,5 +1,4 @@
 ﻿function Remove-Null {
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", Justification = "Not applicable")]
     param(
         [Parameter(ValueFromPipeline)]
         [PSCustomObject]$entityIn
