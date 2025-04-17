@@ -6,11 +6,13 @@
     )
     begin {
         try {
-            $cred = Get-StoredCredential -Target "BANKY"
-            if (-not $cred) {
-                throw "Credenciais não encontradas. Reautentique."
+            if (-not $script:BANKY_AUTH_TOKEN) {
+                $cred = (Get-StoredCredential -Target "BANKY")
+                if (-not $cred) {
+                    throw "Credenciais não encontradas. Reautentique."
+                }
+                Invoke-Authentication -username $Cred.username -Password (Protect-String $Cred.GetNetworkCredential().password)
             }
-            Invoke-Authentication -username $Cred.username -Password (Protect-String $Cred.GetNetworkCredential().password)
         }
         catch {
             Throw "Login expirado. Reautentique."
