@@ -42,7 +42,7 @@ function New-BatchTransaction {
                 Update-Transaction -id $id  -account $Account -category $category -description $description -value $value -date $date -AccountMatchExact:$accountMatchExact
             }
             Transfer {
-                New-TransferTransaction -Origin $origin -Destiny $Destiny -description $description -value $value -date $date
+                New-TransferTransaction -Origin $origin -Destiny $Destiny -description $description -value $value -date $date -AccountMatchExact:$accountMatchExact
             }
             Default {
                 throw "$action not implemented"
