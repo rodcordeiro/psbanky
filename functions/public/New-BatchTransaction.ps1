@@ -13,10 +13,10 @@ function New-BatchTransaction {
         if ($PSItem -eq $null ) {
             throw 'Do not use this for unique processes as it adds more complexity than needed';
         }
-        
+
         # Action to be executed
         $action = $PSItem.action
-        
+
         #  Common parameters
         $account = $PSItem.account
         $category = $PSItem.category
@@ -24,7 +24,7 @@ function New-BatchTransaction {
         $value = $PSItem.value
         $AccountMatchExact = $PSItem.AccountMatchExact
         $id = $PSItem.id
-        
+
 
         # Transfer Parameters
         $Origin = $PSItem.Origin

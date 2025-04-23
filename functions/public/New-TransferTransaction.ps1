@@ -1,4 +1,4 @@
-# "description",
+﻿# "description",
 # "origin",
 # "destiny",
 # "date",
@@ -42,15 +42,15 @@ function New-TransferTransaction {
                 $Date = $PSItem.Date
             }
         }
-        
+
         if (-not [guid]::TryParse($Origin, [ref]([guid]::Empty))) { throw "Origin is not a valid guid" }
         if (-not [guid]::TryParse($Destiny, [ref]([guid]::Empty))) { throw "Destiny is not a valid guid" }
         if ([String]::IsNullOrEmpty($Description)) { throw "Description must be passed" }
         $transaction = [CreateBankyTransferTransaction]::new()
-        $transaction.Origin = $Origin 
-        $transaction.Destiny = $Destiny 
-        $transaction.Description = $Description 
-        $transaction.Value = $Value 
+        $transaction.Origin = $Origin
+        $transaction.Destiny = $Destiny
+        $transaction.Description = $Description
+        $transaction.Value = $Value
         $transaction.Date = if ($date) { get-date -Format 'yyyy-MM-ddTHH:mm:ss' -Date $date } else { get-date -Format 'yyyy-MM-ddTHH:mm:ss' }
 
         $body = $transaction | Remove-Null | ConvertTo-Json -Depth 1
