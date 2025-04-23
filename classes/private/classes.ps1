@@ -55,4 +55,10 @@ class UpdateBankyTransaction {
         $this.id = $id;
     }
 }
-
+class CreateBankyTransferTransaction {
+    [string]$description
+    [AllowNull()][string]$date
+    [decimal]$value
+    [string]$origin
+    [string]$destiny
+}
