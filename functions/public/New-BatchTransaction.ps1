@@ -16,37 +16,54 @@ function New-BatchTransaction {
 
         # Action to be executed
         $action = $PSItem.action
-
-        #  Common parameters
-        $account = $PSItem.account
-        $category = $PSItem.category
-        $description = $PSItem.description
-        $value = $PSItem.value
-        $AccountMatchExact = $PSItem.AccountMatchExact
-        $id = $PSItem.id
-
-
-        # Transfer Parameters
-        $Origin = $PSItem.Origin
-        $Destiny = $PSItem.Destiny
-
-        if ($PSItem.date) {
-            $date = $PSItem.date
+        
+        #region  Common parameters
+        $params = @{
+            description       = $PSItem.description
+            value             = $PSItem.value
+            AccountMatchExact = $PSItem.AccountMatchExact
         }
+        if ($PSItem.account) {
+            $params.account = $PSItem.account
+        }
+        if ($PSItem.category) {
+            $params.category = $PSItem.category
+        }
+        if ($PSItem.date) {
+            $params.date = $PSItem.date
+        }
+        #endregion
+
+        #region Update Command
+        if ($PSItem.id) {
+            $params.id = $PSItem.id
+        }
+        #endregion
+
+        #region Transfer Parameters
+        if ($PSItem.Origin) {
+            $params.Origin = $PSItem.Origin
+        }
+        if ($PSItem.Destiny) {
+            $params.Destiny = $PSItem.Destiny
+        }
+        #endregion
+        
 
         switch ($action) {
             Create {
-                New-Transaction -account $account -category $category -description $description -value $value -date $date -AccountMatchExact:$accountMatchExact
+                New-Transaction @params
             }
             Update {
-                Update-Transaction -id $id  -account $Account -category $category -description $description -value $value -date $date -AccountMatchExact:$accountMatchExact
+                Update-Transaction @params
             }
             Transfer {
-                New-TransferTransaction -Origin $origin -Destiny $Destiny -description $description -value $value -date $date -AccountMatchExact:$accountMatchExact
+                New-TransferTransaction  @params
             }
             Default {
                 throw "$action not implemented"
             }
         }
+        $params = {}
     }
 }
