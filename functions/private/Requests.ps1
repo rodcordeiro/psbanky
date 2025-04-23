@@ -18,13 +18,17 @@
             Throw "Login expirado. Reautentique."
         }
 
+    }
+    process {
+        $escapedUri = [URI]::EscapeUriString("$BANKY_API_URL/$Uri")
+        $scheme, $rest = $escapedUri -split "://", 2
+        $cleanedRest = $rest -replace "/{2,}", "/"
+        $Uri = "$($scheme)://$cleanedRest";
 
         $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
         $headers.Add("Content-Type", "application/json")
         $headers.Add("Authorization", "Bearer $($script:BANKY_AUTH_TOKEN)")
 
-    }
-    process {
         $response = Invoke-RestMethod $Uri -Method $Method -Headers $headers -Body $Body
         return $response
     }

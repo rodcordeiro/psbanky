@@ -80,7 +80,7 @@
 
         $body = $transaction | Remove-Null | ConvertTo-Json -Depth 1
 
-        $response = Invoke-Api "http://82.180.136.148:3338/api/v1/transactions/$($transaction.id)" -Method 'PUT' -Body $body
+        $response = Invoke-Api "/api/v1/transactions/$($transaction.id)" -Method 'PUT' -Body $body
         $response
     }
 

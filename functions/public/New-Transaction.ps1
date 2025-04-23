@@ -29,6 +29,7 @@
         [Parameter(Mandatory = $false, ValueFromPipeline)]
         [datetime]$date,
         # If account parameter is specified, the script will search for the account with a similar name, breaking if it returns more than one account. This switch disables the like filter.
+        [Parameter(Mandatory = $false, ValueFromPipeline)]
         [switch]$AccountMatchExact
     )
 
@@ -49,7 +50,7 @@
             throw "Banky not found. Please configure it."
         }
 
-        $url = [URI]::EscapeUriString("$BANKY_API_URL/api/v1/transactions")
+        $url = "/api/v1/transactions"
         $accounts = $(Get-Account)
         $categories = $(Get-Category)
     }

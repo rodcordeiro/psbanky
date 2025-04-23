@@ -55,3 +55,4 @@ class UpdateBankyTransaction {
         $this.id = $id;
     }
 }
+
