@@ -5,26 +5,25 @@ online version:
 schema: 2.0.0
 ---
 
-# New-BankyAuthentication
+# Invoke-Authentication
 
 ## SYNOPSIS
-Authenticate to banky
+Authenticate to Banky services
 
 ## SYNTAX
 
 ```
-New-BankyAuthentication [-username] <String> [-password] <SecureString> [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Invoke-Authentication [-username] <String> [-password] <SecureString> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This function authenticates to banky generating the banky file
+This function authenticates to Banky services and save the token to environment
 
 ## EXAMPLES
 
 ### EXEMPLO 1
 ```
-New-BankyAuthentication -username Teste -password Teste
+Invoke-Authentication -username Teste -password Teste
 ```
 
 Authenticate to banky with test user
@@ -58,37 +57,6 @@ Required: True
 Position: 2
 Default value: None
 Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

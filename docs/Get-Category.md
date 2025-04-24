@@ -5,24 +5,28 @@ online version:
 schema: 2.0.0
 ---
 
-# New-BankyTransaction
+# Get-Category
 
 ## SYNOPSIS
-Authenticate to banky
+{{ Fill in the Synopsis }}
 
 ## SYNTAX
 
+```
+Get-Category [<CommonParameters>]
+```
+
 ## DESCRIPTION
-This function authenticates to banky generating the banky file
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
-### EXEMPLO 1
-```
-New-BankyAuthentication -username Teste -password Teste
+### Example 1
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Authenticate to banky with test user
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -31,13 +35,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### [System.string] username
-###     The username to authenticate
-### [System.SecureString] password
-###     The password secure string to be used
+### Nenhum
+
 ## OUTPUTS
 
+### System.Object
 ## NOTES
-Version: 1.0
 
 ## RELATED LINKS

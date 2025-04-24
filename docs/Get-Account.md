@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-BankyCategory
+# Get-Account
 
 ## SYNOPSIS
 {{ Fill in the Synopsis }}
@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Get-BankyCategory [<CommonParameters>]
+Get-Account [<CommonParameters>]
 ```
 
 ## DESCRIPTION
