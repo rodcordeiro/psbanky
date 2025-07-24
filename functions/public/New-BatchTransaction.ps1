@@ -1,6 +1,4 @@
-﻿
-
-function New-BatchTransaction {
+﻿function New-BatchTransaction {
     param(
         [Parameter(Mandatory = $true, ValueFromPipeline)]
         # [ValidateSet('Create', 'Update', 'Transfer', 'Delete')]

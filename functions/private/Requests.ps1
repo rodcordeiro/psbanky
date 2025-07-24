@@ -7,11 +7,11 @@
     begin {
         try {
             if (-not $script:BANKY_AUTH_TOKEN) {
-                $cred = (Get-StoredCredential -Target "BANKY")
-                if (-not $cred) {
-                    throw "Credenciais não encontradas. Reautentique."
-                }
-                Invoke-Authentication -username $Cred.username -Password (Protect-String $Cred.GetNetworkCredential().password)
+                # $null = Get-StoredCredential -Target "BANKY" -ErrorAction Stop -OutVariable cred -Verbose:$false
+                # if (-not $cred) {
+                throw "Credenciais não encontradas. Reautentique."
+                # }
+                # Invoke-Authentication -username $Cred.username -Password (Protect-String $Cred.GetNetworkCredential().password)
             }
         }
         catch {

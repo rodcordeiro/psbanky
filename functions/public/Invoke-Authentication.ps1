@@ -51,9 +51,9 @@
 "@
         $response = Invoke-RestMethod $url -Method 'POST' -Headers $headers -Body $body
 
-        New-StoredCredential -Target "BANKY" -UserName $username -Password $(Unprotect-SecureString $password) -Persist LocalMachine
+        # New-StoredCredential -Target "BANKY" -UserName $username -Password $(Unprotect-SecureString $password) -Persist LocalMachine
 
         $script:BANKY_AUTH_TOKEN = $response.accessToken
-        $env:BANKY_AUTH_TOKEN = $response.accessToken
+        # $env:BANKY_AUTH_TOKEN = $response.accessToken
     }
 }
