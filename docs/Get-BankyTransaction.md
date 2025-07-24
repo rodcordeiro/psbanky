@@ -23,7 +23,7 @@ Get-BankyTransaction [[-limit] <Int32>] [[-page] <Int32>] [[-category] <String>]
 
 ### EXEMPLO 1
 ```
-Get-LastTransactions
+Get-BankyTransaction
 ```
 
 ## PARAMETERS

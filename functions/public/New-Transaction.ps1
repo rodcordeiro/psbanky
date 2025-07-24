@@ -5,7 +5,7 @@
 .DESCRIPTION
     This function creates a new transaction entry at banky
 .EXAMPLE
-    New-BankyTransaction
+    New-Transaction
     Create a new transaction entry at banky
 
 .NOTES

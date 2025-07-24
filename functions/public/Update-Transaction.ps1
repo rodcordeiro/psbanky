@@ -5,7 +5,7 @@
 .DESCRIPTION
     This function update transaction entry at banky
 .EXAMPLE
-    Update-BankyTransaction
+    Update-Transaction
     Update a transaction entry at banky
 .NOTES
     Version: 1.0

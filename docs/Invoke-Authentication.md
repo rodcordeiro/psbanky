@@ -23,7 +23,7 @@ This function authenticates to Banky services and save the token to environment
 
 ### EXEMPLO 1
 ```
-Invoke-Authentication -username Teste -password Teste
+Invoke-Authentication -username Teste -password [SecureString]
 ```
 
 Authenticate to banky with test user

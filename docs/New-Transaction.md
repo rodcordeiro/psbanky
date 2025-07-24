@@ -24,7 +24,7 @@ This function creates a new transaction entry at banky
 
 ### EXEMPLO 1
 ```
-New-BankyTransaction
+New-Transaction
 ```
 
 Create a new transaction entry at banky

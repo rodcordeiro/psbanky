@@ -9,7 +9,7 @@
 .PARAMETER password
     The password secure string to be used
 .EXAMPLE
-    Invoke-Authentication -username Teste -password Teste
+    Invoke-Authentication -username Teste -password [SecureString]
     Authenticate to banky with test user
 .INPUTS
     [System.string] username
@@ -50,7 +50,8 @@
 }
 "@
         $response = Invoke-RestMethod $url -Method 'POST' -Headers $headers -Body $body
-        New-StoredCredential -Target "BANKY" -UserName $Cred.username -Password $Cred.GetNetworkCredential().password -Persist LocalMachine
+
+        New-StoredCredential -Target "BANKY" -UserName $username -Password $(Unprotect-SecureString $password) -Persist LocalMachine
 
         $script:BANKY_AUTH_TOKEN = $response.accessToken
         $env:BANKY_AUTH_TOKEN = $response.accessToken

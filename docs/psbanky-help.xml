@@ -172,7 +172,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXEMPLO 1 --------------------------</maml:title>
-        <dev:code>Get-LastTransactions</dev:code>
+        <dev:code>Get-BankyTransaction</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -344,7 +344,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXEMPLO 1 --------------------------</maml:title>
-        <dev:code>Invoke-Authentication -username Teste -password Teste</dev:code>
+        <dev:code>Invoke-Authentication -username Teste -password [SecureString]</dev:code>
         <dev:remarks>
           <maml:para>Authenticate to banky with test user</maml:para>
         </dev:remarks>
@@ -603,7 +603,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXEMPLO 1 --------------------------</maml:title>
-        <dev:code>New-BankyTransaction</dev:code>
+        <dev:code>New-Transaction</dev:code>
         <dev:remarks>
           <maml:para>Create a new transaction entry at banky</maml:para>
         </dev:remarks>
@@ -1029,7 +1029,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXEMPLO 1 --------------------------</maml:title>
-        <dev:code>Update-BankyTransaction</dev:code>
+        <dev:code>Update-Transaction</dev:code>
         <dev:remarks>
           <maml:para>Update a transaction entry at banky</maml:para>
         </dev:remarks>

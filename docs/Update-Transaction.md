@@ -24,7 +24,7 @@ This function update transaction entry at banky
 
 ### EXEMPLO 1
 ```
-Update-BankyTransaction
+Update-Transaction
 ```
 
 Update a transaction entry at banky

@@ -3,7 +3,7 @@
 .SYNOPSIS
     Retrieves the last N transactions
 .EXAMPLE
-    Get-LastTransactions
+    Get-BankyTransaction
 .PARAMETER limit
     Limits the amount of returning rows
 .PARAMETER page
