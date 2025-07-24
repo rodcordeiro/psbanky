@@ -20,6 +20,9 @@ Locale: pt-br
 ### [Get-Category](Get-Category.md)
 {{ Fill in the Description }}
 
+### [Get-PaymentType](Get-PaymentType.md)
+{{ Fill in the Description }}
+
 ### [Invoke-Authentication](Invoke-Authentication.md)
 {{ Fill in the Description }}
 
@@ -30,6 +33,9 @@ Locale: pt-br
 {{ Fill in the Description }}
 
 ### [New-TransferTransaction](New-TransferTransaction.md)
+{{ Fill in the Description }}
+
+### [Update-Account](Update-Account.md)
 {{ Fill in the Description }}
 
 ### [Update-Transaction](Update-Transaction.md)
