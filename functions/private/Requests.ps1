@@ -26,7 +26,7 @@
         $Uri = "$($scheme)://$cleanedRest";
 
         $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-        $headers.Add("Content-Type", "application/json")
+        $headers.Add("Content-Type", "application/json; charset=utf-8")
         $headers.Add("Authorization", "Bearer $($script:BANKY_AUTH_TOKEN)")
 
         $response = Invoke-RestMethod $Uri -Method $Method -Headers $headers -Body $Body
